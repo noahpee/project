@@ -1,0 +1,22 @@
+*{
+  font-family: openDyslexic-Bold;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+Body {
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: lightskyblue;
+  box-sizing: border-box;
+}
+
+.App {
+  text-align: left;
+}
+
+Header  {
+  display: flex;
+  justify-content: center;
+}

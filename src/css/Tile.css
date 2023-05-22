@@ -1,0 +1,20 @@
+.tile {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: auto auto;
+    background-color: white;
+    overflow: hidden;
+    cursor: pointer;
+    height: 90%;
+    width: 90%;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+}
+
+.tile-image {
+    max-width: 100%;
+    max-height: 80%;
+    object-fit: cover;
+}

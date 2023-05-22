@@ -1,0 +1,13 @@
+.grid {
+    display: grid;
+    align-items: center;
+    justify-content: space-evenly;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    background-color: rgb(241, 241, 241);
+    width: 95%;
+    height: 8%;
+    line-height: 1.6rem;
+    margin: 0 auto;
+    border-radius: 10px;
+}
