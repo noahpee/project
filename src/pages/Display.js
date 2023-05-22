@@ -5,7 +5,7 @@ import Grid from './display_components/Grid'
 import Sentence from './display_components/Sentence'
 import Example from './display_components/Example'
 
-let userStrings = []
+let userStrings = {}
 
 export default function Display() {
     
@@ -58,13 +58,22 @@ export default function Display() {
 
     function createNGRams(array) {
 
-        for (let i = 0; i <= array.length -1;i ++) {
+        for (let i = 0; i <= array.length -2;i ++) {
 
             let NGram = array.slice(i, i+4)
 
-            let obj = {key:NGram[i], value:NGram}
+            let key = NGram[0]
 
-            console.log(NGram)
+            let obj = {[key]:[]}
+
+            let gram = []
+
+            for (let j = 1; j <= NGram.length -1;j++) {
+                gram.push(NGram[j])
+            }
+            obj[key] = [...obj[key],gram]
+            userStrings = {...userStrings, ...obj}
+            console.log(userStrings)
         }
     }
 
