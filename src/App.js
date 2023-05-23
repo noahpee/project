@@ -2,10 +2,10 @@ import './css/App.css';
 import axios from "axios";
 import Home from './pages/Home';
 import Display from './pages/Display'
-import Header from "./components/Header"
+import Header from './components/Header';
 import Footer from "./components/Footer"
 import { database } from './database'
-import {  useEffect } from "react";
+import {  useState,useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 export let dataBase;
@@ -13,9 +13,12 @@ export let home;
 
 function App() {
 
+  const [userStrings, setStrings] = useState({})
+
   useEffect(() => {
-    getData();
-}, []);
+    getData()
+    getUserStrings()
+}, [])
 
 async function getData() {
     try {
@@ -30,13 +33,24 @@ async function getData() {
     }
 }
 
+async function getUserStrings() {
+  try {
+      const API = "http://localhost:8080/ngrams";
+      const res = await axios.get(API);
+      setStrings(res.data)
+      console.log(res.data)
+  } catch (err) {
+      console.log(err)
+  }
+}
+
     return (
     <BrowserRouter>
       <div className="App">
-        <Header />
+      <Header />
         <Routes>
           <Route path="/" element={<Home />}/>
-          <Route path="/display" element={<Display />} />
+          <Route path="/display" element={<Display userStrings={userStrings} />} />
         </Routes>
         <Footer />
       </div>
