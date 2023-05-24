@@ -9,8 +9,8 @@ import Fuse from 'fuse.js'
 
 let globalString = []
 
-export default function Display({userStrings}) {
-    
+export default function Display({userArrays}) {
+
     const [userSentence, addUserSentence] = useState([])
     const [sentence, addWord] = useState([])
     const [array, setWord] = useState([]);
@@ -23,7 +23,6 @@ export default function Display({userStrings}) {
 
         addSentence(wordObject.text)
         addToUserSentence(wordObject.id)
-
         try {
             const API = `http://localhost:8080/words?text=${wordObject.text}`;
             const res = await axios.get(API);
@@ -84,26 +83,31 @@ export default function Display({userStrings}) {
         for (let i = 0; i <= array.length - 2; i++) {
             let NGram = array.slice(i, i + 4);
             let key = NGram[0];
-        
-            if (!userStrings[key]) {
-              userStrings[key] = []; // Initialize the array if it doesn't exist
-            }
-        
-            let nextWords = [];
-            for (let j = NGram.length - 1; j > 0; j--) {
+    
+        if (!userArrays[key]) {
+            userArrays[key] = []; // Initialize the array if it doesn't exist
+        }
+    
+        let nextWords = [];
+        for (let j = NGram.length - 1; j > 0; j--) {
             nextWords.push(NGram.slice(1, j + 1));
-            }
-            userStrings[key] = [...userStrings[key], ...nextWords]; // Add nextWords arrays to the existing array
+        }
+    
+        if (userArrays[key].length === 0) {
+            userArrays[key] = [...nextWords]; // Add nextWords arrays directly if the key is empty
+        } else {
+            userArrays[key] = [...userArrays[key], ...nextWords]; // Add nextWords arrays to the existing array
         }
     }
+        const result = { grams: userArrays };
+        putGram(result);
+    }      
 
-    async function putGram(userStrings) {
-
-        let grams = {grams:userStrings}
+    async function putGram(result) {
 
         try {
         const API = `http://localhost:8080/ngrams/646bd2bc00040f8013e4b912`;
-        await axios.put(API, grams);
+        await axios.put(API, result);
         console.log("saved")
         } catch (err) {
             console.log(err)
@@ -112,7 +116,7 @@ export default function Display({userStrings}) {
 
     return (
         <div>
-            <AppHeader searchKeyUp={searchKeyUp} putGram={putGram} />
+            <AppHeader searchKeyUp={searchKeyUp}/>
             <Example />
             <Sentence sentence={sentence} userSentence={userSentence} dataBase={dataBase}  deleteLastWord={deleteLastWord} clearSentence={clearSentence}/>
             <Grid array={array} dataBase={dataBase} setGrid={setGrid}/>

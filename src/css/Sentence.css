@@ -12,14 +12,20 @@
     display: flex;
     width: 90%;
     background-color: peachpuff;
+    gap: 10px;
 }
 
 .sentence-tile {
     max-width: 100px;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .sentence-tile-image {
-    max-width: 70%;
-    max-height: 70%;
+    max-width: 75%;
+    max-height: 75%;
     object-fit: cover;
 }

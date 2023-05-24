@@ -13,7 +13,7 @@ export let home;
 
 function App() {
 
-  const [userStrings, setStrings] = useState({})
+  const [userArrays, setStrings] = useState({})
 
   useEffect(() => {
     getData()
@@ -37,8 +37,8 @@ async function getUserStrings() {
   try {
       const API = "http://localhost:8080/ngrams";
       const res = await axios.get(API);
-      setStrings(res.data)
-      console.log(res.data)
+      setStrings(res.data[0].grams[0])
+      console.log(res.data[0].grams[0])
   } catch (err) {
       console.log(err)
   }
@@ -50,7 +50,7 @@ async function getUserStrings() {
       <Header />
         <Routes>
           <Route path="/" element={<Home />}/>
-          <Route path="/display" element={<Display userStrings={userStrings} />} />
+          <Route path="/display" element={<Display userArrays={userArrays} />} />
         </Routes>
         <Footer />
       </div>
